@@ -13,7 +13,7 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
+builder.Services.AddCors();
 
 
 var app = builder.Build();
@@ -23,6 +23,11 @@ var app = builder.Build();
 // middleware container start
 
 //app.UseAuthorization();
+
+app.UseCors( opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:3000");
+});
 
 app.MapControllers();
 // middleware container end
